@@ -1,6 +1,7 @@
 package sync
 
 import (
+	"context"
 	"net/http"
 	"os"
 
@@ -13,12 +14,13 @@ import (
 // GitHubClient -
 type GitHubClient struct {
 	client *github.Client
+	ctx    context.Context
 	dryRun bool
 }
 
 // NewGitHubClient - creates a client, authenticated by OAuth2 via a static token
 func NewGitHubClient(opts Options) *GitHubClient {
-	token := os.Getenv("GH_SYNC_TOKEN")
+	token := os.Getenv("GITHUB_API_KEY")
 	// fmt.Printf("GH Token is %s\n", token)
 	ts := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: token},
@@ -34,5 +36,5 @@ func NewGitHubClient(opts Options) *GitHubClient {
 	}
 	client := github.NewClient(hc)
 
-	return &GitHubClient{client: client, dryRun: opts.DryRun}
+	return &GitHubClient{client: client, ctx: context.Background(), dryRun: opts.DryRun}
 }

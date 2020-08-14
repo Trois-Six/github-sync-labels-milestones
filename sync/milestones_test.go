@@ -3,8 +3,8 @@ package sync
 import (
 	"testing"
 
-	"github.com/hairyhenderson/github-sync-labels-milestones/config"
 	"github.com/stretchr/testify/assert"
+	"github.com/trois-six/github-sync-labels-milestones/config"
 )
 
 func TestSearchMS(t *testing.T) {

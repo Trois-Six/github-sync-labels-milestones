@@ -3,7 +3,7 @@ package sync
 import (
 	"fmt"
 
-	"github.com/hairyhenderson/github-sync-labels-milestones/config"
+	"github.com/trois-six/github-sync-labels-milestones/config"
 
 	"github.com/google/go-github/github"
 )
@@ -71,7 +71,7 @@ func (g *GitHubClient) getAllMilestones(repo *config.Repository, state string) (
 	}
 	var allMilestones []*github.Milestone
 	for {
-		milestones, resp, err := g.client.Issues.ListMilestones(repo.User, repo.Repo, opt)
+		milestones, resp, err := g.client.Issues.ListMilestones(g.ctx, repo.User, repo.Repo, opt)
 		if err != nil {
 			return nil, err
 		}
@@ -113,7 +113,7 @@ func (g *GitHubClient) createMilestone(repo *config.Repository, ms *config.Miles
 		DueOn:       &ms.DueOn,
 	}
 	if !g.dryRun {
-		_, resp, err := g.client.Issues.CreateMilestone(repo.User, repo.Repo, m)
+		_, resp, err := g.client.Issues.CreateMilestone(g.ctx, repo.User, repo.Repo, m)
 		if err != nil {
 			return err
 		}
@@ -124,7 +124,7 @@ func (g *GitHubClient) createMilestone(repo *config.Repository, ms *config.Miles
 
 func (g *GitHubClient) deleteMilestone(repo *config.Repository, ms *config.Milestone) error {
 	if !g.dryRun {
-		resp, err := g.client.Issues.DeleteMilestone(repo.User, repo.Repo, ms.Number)
+		resp, err := g.client.Issues.DeleteMilestone(g.ctx, repo.User, repo.Repo, ms.Number)
 		if err != nil {
 			return err
 		}
@@ -141,7 +141,7 @@ func (g *GitHubClient) updateMilestone(repo *config.Repository, ms *config.Miles
 		DueOn:       &ms.DueOn,
 	}
 	if !g.dryRun {
-		_, resp, err := g.client.Issues.EditMilestone(repo.User, repo.Repo, ms.Number, m)
+		_, resp, err := g.client.Issues.EditMilestone(g.ctx, repo.User, repo.Repo, ms.Number, m)
 		if err != nil {
 			return err
 		}

@@ -3,8 +3,8 @@ package sync
 import (
 	"fmt"
 
-	"github.com/hairyhenderson/github-sync-labels-milestones/config"
 	"github.com/pkg/errors"
+	"github.com/trois-six/github-sync-labels-milestones/config"
 )
 
 // Options -

@@ -7,11 +7,11 @@ import (
 	"os"
 	"path"
 
-	"github.com/hairyhenderson/github-sync-labels-milestones/config"
-	"github.com/hairyhenderson/github-sync-labels-milestones/sync"
 	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/trois-six/github-sync-labels-milestones/config"
+	"github.com/trois-six/github-sync-labels-milestones/sync"
 )
 
 var cachePath string

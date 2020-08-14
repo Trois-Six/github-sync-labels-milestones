@@ -3,7 +3,7 @@ package sync
 import (
 	"fmt"
 
-	"github.com/hairyhenderson/github-sync-labels-milestones/config"
+	"github.com/trois-six/github-sync-labels-milestones/config"
 
 	"github.com/google/go-github/github"
 )
@@ -63,7 +63,7 @@ func (g *GitHubClient) getAllLabels(repo *config.Repository) ([]*config.Label, e
 
 	var allLabels []*github.Label
 	for {
-		labels, resp, err := g.client.Issues.ListLabels(repo.User, repo.Repo, opt)
+		labels, resp, err := g.client.Issues.ListLabels(g.ctx, repo.User, repo.Repo, opt)
 		if err != nil {
 			return nil, err
 		}
@@ -102,7 +102,7 @@ func (g *GitHubClient) searchLabels(label *config.Label, labels []*config.Label)
 func (g *GitHubClient) createLabel(repo *config.Repository, label *config.Label) error {
 	l := &github.Label{Name: &label.Name, Color: &label.Color}
 	if !g.dryRun {
-		_, resp, err := g.client.Issues.CreateLabel(repo.User, repo.Repo, l)
+		_, resp, err := g.client.Issues.CreateLabel(g.ctx, repo.User, repo.Repo, l)
 		if err != nil {
 			return err
 		}
@@ -113,7 +113,7 @@ func (g *GitHubClient) createLabel(repo *config.Repository, label *config.Label)
 
 func (g *GitHubClient) deleteLabel(repo *config.Repository, label *config.Label) error {
 	if !g.dryRun {
-		resp, err := g.client.Issues.DeleteLabel(repo.User, repo.Repo, label.Name)
+		resp, err := g.client.Issues.DeleteLabel(g.ctx, repo.User, repo.Repo, label.Name)
 		if err != nil {
 			return err
 		}
@@ -125,7 +125,7 @@ func (g *GitHubClient) deleteLabel(repo *config.Repository, label *config.Label)
 func (g *GitHubClient) updateLabel(repo *config.Repository, label *config.Label) error {
 	l := &github.Label{Name: &label.Name, Color: &label.Color}
 	if !g.dryRun {
-		_, resp, err := g.client.Issues.EditLabel(repo.User, repo.Repo, label.Name, l)
+		_, resp, err := g.client.Issues.EditLabel(g.ctx, repo.User, repo.Repo, label.Name, l)
 		if err != nil {
 			return err
 		}
